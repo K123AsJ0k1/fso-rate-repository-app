@@ -1,0 +1,1 @@
+# fso-rate-repository-app
