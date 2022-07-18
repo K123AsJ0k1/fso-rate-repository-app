@@ -1,8 +1,22 @@
 import { Text } from "react-native"
 
-const RepositoryItem = ({ id }) => {
+const RepositoryItem = ({ item }) => {
     return (
-        <Text>{id}</Text>
+      <Text>
+        Full name: {item.fullName}
+        {"\n"}
+        Description: {item.description}
+        {"\n"}
+        Language: {item.language}
+        {"\n"}
+        Stars: {item.stargazersCount}
+        {"\n"}
+        Forks: {item.forksCount}
+        {"\n"}
+        Reviews: {item.reviewCount}
+        {"\n"}
+        Rating: {item.ratingAverage}
+      </Text>
     )
 }
 
