@@ -1,22 +1,34 @@
-import { Text } from "react-native"
+import { View, StyleSheet } from "react-native"
+import Stats from "./Stats";
+import RepoProfile from "./RepoProfile";
+
+const styles = StyleSheet.create({
+  container: {
+    display: 'flex',
+    backgroundColor: 'white',
+  },
+  tinyLogo: {
+    width: 50,
+    height: 50,
+  },
+});
 
 const RepositoryItem = ({ item }) => {
     return (
-      <Text>
-        Full name: {item.fullName}
-        {"\n"}
-        Description: {item.description}
-        {"\n"}
-        Language: {item.language}
-        {"\n"}
-        Stars: {item.stargazersCount}
-        {"\n"}
-        Forks: {item.forksCount}
-        {"\n"}
-        Reviews: {item.reviewCount}
-        {"\n"}
-        Rating: {item.ratingAverage}
-      </Text>
+      <View style={styles.container}>
+        <RepoProfile 
+          Url={item.ownerAvatarUrl} 
+          fullName={item.fullName} 
+          description={item.description} 
+          language={item.language}
+        />
+        <Stats 
+          stars={item.stargazersCount} 
+          forks={item.forksCount} 
+          reviews={item.reviewCount} 
+          rating={item.ratingAverage}
+        />
+      </View>
     )
 }
 
