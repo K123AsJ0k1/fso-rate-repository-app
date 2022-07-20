@@ -1,4 +1,5 @@
 import { View, Text, StyleSheet } from 'react-native';
+import { Link } from 'react-router-native';
 
 const styles = StyleSheet.create({
   text: {
@@ -15,10 +16,13 @@ const styles = StyleSheet.create({
   },
 });
 
-const AppBarTab = ({ tab_name }) => {    
+const AppBarTab = ({ tabName, url }) => {    
+    //
     return (
         <View style={styles.flexItemA}>
-            <Text style={styles.text}>{tab_name}</Text>
+            <Link to={url}>
+              <Text style={styles.text}>{tabName}</Text>
+            </Link>
         </View>
     )
 }

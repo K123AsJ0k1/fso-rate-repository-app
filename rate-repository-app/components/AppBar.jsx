@@ -13,9 +13,11 @@ const styles = StyleSheet.create({
 });
 
 const AppBar = () => {
+  //<AppBarTab url="/signin" tabName="Sign in"/>
   return ( 
     <View style={styles.container}>
-        <AppBarTab tab_name="Repositories"/>
+        <AppBarTab url="/" tabName="Repositories"/>
+        <AppBarTab url="/signin" tabName="Sign in"/>
     </View>
   );
 };
