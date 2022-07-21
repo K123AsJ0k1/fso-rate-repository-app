@@ -2,6 +2,7 @@ import Text from './Text';
 import { Pressable, View, StyleSheet } from 'react-native';
 import { Formik } from 'formik'
 import FormikTextInput from './FormikTextInput';
+import * as yup from 'yup';
 
 const styles = StyleSheet.create({
   container: {
@@ -35,11 +36,30 @@ const styles = StyleSheet.create({
   } 
 })
 
+const validationSchema = yup.object().shape({
+  username: yup
+    .string()
+    .test('len', 'Username must have atleast 5 characters', val => {
+      if (val === undefined) {
+        return false
+      }
+      return val.length >= 5
+    }),
+  password: yup
+    .string()
+    .test('len', 'Password must have atleast 8 characters', val => {
+      if (val === undefined) {
+        return false
+      }
+      return val.length >= 8
+    }),
+});
+
 const SignInForm = ({ onSubmit }) => {
   return (
     <View style={styles.form}>
-      <FormikTextInput style={styles.field} name="username" placeholder="username"/>
-      <FormikTextInput style={styles.field} name="password" placeholder="password" secureTextEntry={true}/>
+      <FormikTextInput name="username" placeholder="username"/>
+      <FormikTextInput name="password" placeholder="password" secureTextEntry={true}/>
       <Pressable onPress={onSubmit}>
         <Text style={styles.button}>Sign in</Text>
       </Pressable>
@@ -54,7 +74,7 @@ const SignIn = () => {
   
   return (
     <View style={styles.container}>
-      <Formik initialValues={{ username: '', password: '' }} onSubmit={onSubmit}>
+      <Formik initialValues={{ username: '', password: '' }} onSubmit={onSubmit} validationSchema={validationSchema}>
         {({ handleSubmit }) => (<SignInForm onSubmit={handleSubmit}/>)}
       </Formik>
     </View>
