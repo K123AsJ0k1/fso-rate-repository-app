@@ -15,7 +15,6 @@ const styles = StyleSheet.create({
 });
 
 const AppBar = () => {
-  //<AppBarTab url="/signin" tabName="Sign in"/>
   return ( 
     <View style={styles.container}>
       <ScrollView styles={styles.scroll} horizontal>
