@@ -19,11 +19,3 @@ export const GET_REPOSITORIES = gql`
     }
   }
 `;
-
-export const TEST = gql`
-  query {
-    repositories {
-      totalCount
-    }
-  }
-`;
