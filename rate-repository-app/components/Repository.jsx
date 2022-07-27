@@ -29,7 +29,6 @@ const Repository = () => {
     const { data, loading } = useQuery(GET_REPO, { variables: { id: repoId } })    
 
     const handlePress = () => {
-        //console.log(data.repository.url)
         Linking.openURL(data.repository.url)
     }
     

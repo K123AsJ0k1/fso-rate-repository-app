@@ -45,3 +45,26 @@ export const GET_REPO = gql`
     }
   }
 `;
+
+export const GET_REVIEWS = gql`
+  query Get_Reviews($id: ID!) {
+    repository(id: $id) {
+      id
+      fullName
+      reviews {
+        edges {
+          node {
+            id
+            text
+            rating
+            createdAt
+            user {
+              id
+              username
+            }
+          }
+        }
+      }
+    }
+  }
+`;
