@@ -23,8 +23,8 @@ const styles = StyleSheet.create({
 const StatItem = ({ title, stat }) => {
     return (
         <View style={styles.container}>
-            <Text style={styles.stat}>{Math.abs(stat) > 999 ? Math.sign(stat)*((Math.abs(stat)/1000).toFixed(1)) + 'k' : Math.sign(stat)*Math.abs(stat)}</Text>
-            <Text style={styles.title}>{title}</Text>
+            <Text testID="stat_value" style={styles.stat}>{Math.abs(stat) > 999 ? Math.sign(stat)*((Math.abs(stat)/1000).toFixed(1)) + 'k' : Math.sign(stat)*Math.abs(stat)}</Text>
+            <Text testID="stat_title" style={styles.title}>{title}</Text>
        </View>
     )
 }

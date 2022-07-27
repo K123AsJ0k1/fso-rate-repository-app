@@ -41,9 +41,9 @@ const styles = StyleSheet.create({
 const RepoInfo = ({ fullName, description, language }) => {
     return (
         <View style={styles.container}>
-            <Text style={styles.name}>{fullName}</Text>
-            <Text style={styles.description}>{description}</Text>
-            <Text style={styles.language}>{language}</Text>
+            <Text testID="repo_name" style={styles.name}>{fullName}</Text>
+            <Text textID="repo_desc" style={styles.description}>{description}</Text>
+            <Text textID="repo_lang" style={styles.language}>{language}</Text>
         </View>
     )
 }
