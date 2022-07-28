@@ -136,19 +136,21 @@ const SingleRepository = () => {
     const { repoId } = useParams()
     
     let response = useQuery(GET_REPO, { variables: { id: repoId } })  
-    const repository = response.data.repository
+    const repository = response.data?.repository
     
     response = useQuery(GET_REVIEWS, { variables: { id: repoId } })
-    const { edges } = response.data.repository.reviews
+    const edges = response.data?.repository?.reviews?.edges
     
     return (
         <FlatList
             data={edges}
             renderItem={({ item }) => <ReviewItem review={item}/>}
-            keyExtractor={item => item.id}
+            keyExtractor={item => item.node.id}
             ListHeaderComponent={() => <RepositoryInfo repository={repository} />}
         />
     );
+    
+    //return null
 };
   
 export default SingleRepository;
