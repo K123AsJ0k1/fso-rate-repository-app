@@ -1,10 +1,10 @@
 import RepositoryItem from "./RepositoryItem"
-import { useQuery } from "@apollo/client";
-import { GET_REPO, GET_REVIEWS } from "../graphql/queries";
 import { useParams } from 'react-router-native';
 import { View, Text, StyleSheet, Pressable, FlatList } from "react-native";
 import * as Linking from 'expo-linking';
 import { format } from "date-fns";
+import useGetReviews from "../hooks/useGetReviews";
+import useGetRepository from "../hooks/useGetRepostiory";
 
 const styles = StyleSheet.create({
     container: {
@@ -94,22 +94,6 @@ const RepositoryInfo = ({ repository }) => {
 };
   
 const ReviewItem = ({ review }) => {
-    // Single review item
-    //yyyy-MM-dd'T'HH:mm:ss.SSS'Z'
-    //const data = new Date(review.node.createdAt)
-    //console.log(review.node.createdAt)
-    //console.log(format(new Date(review.node.createdAt), 'd.m.y'))
-
-    /*
-
-    <View  style={styles.rating_border}>
-                    <Text style={styles.rating}>
-                        {review.node.rating}
-                    </Text>
-                </View>
-
-    */
-
     return (
         <View style={styles.container}>
             <View style={styles.structure}>
@@ -134,23 +118,21 @@ const ReviewItem = ({ review }) => {
   
 const SingleRepository = () => {
     const { repoId } = useParams()
+    const { repository } = useGetRepository({ repoId })
+    const { reviews, loading } = useGetReviews({ repoId })
     
-    let response = useQuery(GET_REPO, { variables: { id: repoId } })  
-    const repository = response.data?.repository
+    if (!loading) {
+        return (
+            <FlatList
+                data={reviews}
+                renderItem={({ item }) => <ReviewItem review={item}/>}
+                keyExtractor={item => item.node.id}
+                ListHeaderComponent={() => <RepositoryInfo repository={repository} />}
+            />
+        );
+    }
     
-    response = useQuery(GET_REVIEWS, { variables: { id: repoId } })
-    const edges = response.data?.repository?.reviews?.edges
-    
-    return (
-        <FlatList
-            data={edges}
-            renderItem={({ item }) => <ReviewItem review={item}/>}
-            keyExtractor={item => item.node.id}
-            ListHeaderComponent={() => <RepositoryInfo repository={repository} />}
-        />
-    );
-    
-    //return null
+    return null
 };
   
 export default SingleRepository;
