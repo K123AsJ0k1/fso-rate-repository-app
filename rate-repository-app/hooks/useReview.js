@@ -5,7 +5,6 @@ const useReview = () => {
   const [mutate, result] = useMutation(REVIEW);
 
   const review = async (review) => {
-    console.log(review);
     const payload = await mutate({ variables: review });
     return payload;
   };

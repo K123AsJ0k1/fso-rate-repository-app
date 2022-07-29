@@ -41,19 +41,19 @@ const styles = StyleSheet.create({
 const validationSchema = yup.object().shape({
   username: yup
     .string()
-    .test('len', 'Username must have atleast 5 characters', val => {
+    .test('len', 'Username must have atleast 1 character', val => {
+      if (val === undefined) {
+        return false
+      }
+      return val.length >= 1
+    }),
+  password: yup
+    .string()
+    .test('len', 'Password must have atleast 5 characters', val => {
       if (val === undefined) {
         return false
       }
       return val.length >= 5
-    }),
-  password: yup
-    .string()
-    .test('len', 'Password must have atleast 8 characters', val => {
-      if (val === undefined) {
-        return false
-      }
-      return val.length >= 8
     }),
 });
 

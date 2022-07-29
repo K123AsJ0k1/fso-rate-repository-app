@@ -57,16 +57,16 @@ const validationSchema = yup.object().shape({
 
 const ReviewForm = ({ onSubmit }) => {
     return (
-        <View style={styles.form}>
-          <FormikTextInput name="repo_owner" placeholder="Repository owner name"/>
-          <FormikTextInput name="repo_name" placeholder="Repository name"/>
-          <FormikTextInput name="repo_rating" placeholder="Rating between 0 and 100"/>
-          <FormikTextInput name="repo_review" placeholder="Review"/>
-          <Pressable onPress={onSubmit}>
-            <Text style={styles.button}>Create a review</Text>
-          </Pressable>
-        </View>
-      )
+      <View style={styles.form}>
+        <FormikTextInput name="repo_owner" placeholder="Repository owner name"/>
+        <FormikTextInput name="repo_name" placeholder="Repository name"/>
+        <FormikTextInput name="repo_rating" placeholder="Rating between 0 and 100"/>
+        <FormikTextInput name="repo_review" placeholder="Review"/>
+        <Pressable onPress={onSubmit}>
+          <Text style={styles.button}>Create a review</Text>
+        </Pressable>
+      </View>
+    )
 }
 
 const CreateReview = () => {
