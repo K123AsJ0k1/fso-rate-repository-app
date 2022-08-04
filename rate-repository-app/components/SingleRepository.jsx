@@ -119,7 +119,12 @@ const ReviewItem = ({ review }) => {
 const SingleRepository = () => {
     const { repoId } = useParams()
     const { repository } = useGetRepository({ repoId })
-    const { reviews, loading } = useGetReviews({ repoId })
+    const { reviews, loading, fetchMore } = useGetReviews({ repositoryId:repoId, first: 6 })
+    
+    const onEndReach = () => {
+        //console.log('You have reached the end of the list')
+        fetchMore()
+    }
     
     if (!loading) {
         return (
@@ -128,6 +133,8 @@ const SingleRepository = () => {
                 renderItem={({ item }) => <ReviewItem review={item}/>}
                 keyExtractor={item => item.node.id}
                 ListHeaderComponent={() => <RepositoryInfo repository={repository} />}
+                onEndReached={onEndReach}
+                onEndReachedThreshold={0.1}
             />
         );
     }

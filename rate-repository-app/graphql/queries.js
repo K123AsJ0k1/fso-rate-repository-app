@@ -53,7 +53,7 @@ export const GET_REPO = gql`
     }
   }
 `;
-
+/*
 export const GET_REVIEWS = gql`
   query Get_Reviews($id: ID!) {
     repository(id: $id) {
@@ -71,6 +71,38 @@ export const GET_REVIEWS = gql`
               username
             }
           }
+        }
+      }
+    }
+  }
+`;
+*/
+
+export const GET_REVIEWS = gql`
+  query Query($repositoryId: ID!, $first: Int, $after: String) {
+    repository(id: $repositoryId) {
+      id
+      fullName
+      reviews(first: $first, after: $after) {
+        totalCount
+        edges {
+          node {
+            id
+            text
+            rating
+            createdAt
+            repositoryId
+            user {
+              id
+              username
+            }
+          }
+          cursor
+        }
+        pageInfo {
+          endCursor
+          startCursor
+          hasNextPage
         }
       }
     }
