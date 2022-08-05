@@ -53,12 +53,10 @@ export const GET_REPO = gql`
     }
   }
 `;
-/*
-export const GET_REVIEWS = gql`
-  query Get_Reviews($id: ID!) {
-    repository(id: $id) {
-      id
-      fullName
+
+export const GET_CURRENT_USER_REVIEWS = gql`
+  query Query {
+    me {
       reviews {
         edges {
           node {
@@ -66,17 +64,13 @@ export const GET_REVIEWS = gql`
             text
             rating
             createdAt
-            user {
-              id
-              username
-            }
+            repositoryId
           }
         }
       }
     }
   }
 `;
-*/
 
 export const GET_REVIEWS = gql`
   query Query($repositoryId: ID!, $first: Int, $after: String) {

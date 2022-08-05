@@ -24,6 +24,7 @@ const AppBar = () => {
       <ScrollView styles={styles.scroll} horizontal>
         <AppBarTab url="/" tabName="Repositories"/>
         { data?.me?.id !== undefined ? <AppBarTab url="/createreview" tabName="Create a review"/> : null } 
+        { data?.me?.id !== undefined ? <AppBarTab url="/myreviews" tabName="My reviews"/> : null } 
         { data?.me?.id === undefined ? <AppBarTab url="/signin" tabName="Sign in"/> : null }
         { data?.me?.id === undefined ? <AppBarTab url="/signup" tabName="Sign up"/> : null }
         { data?.me?.id !== undefined ? <AppBarTab url="/signout" tabName="Sign out"/> : null } 

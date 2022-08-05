@@ -45,7 +45,6 @@ const ListSortingOptions = ({ search, setSearch, title, setTitle, setBy, setDire
         placeholder='Search'
         onChangeText={handleSearch}
         value={search}
-        autoFocus={true}
       />
       <Picker
           selectedValue={title}
