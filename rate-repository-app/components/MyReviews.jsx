@@ -1,11 +1,8 @@
 import useGetUserReviews from "../hooks/useGetUserReviews"
-import RepositoryItem from "./RepositoryItem"
-import { useParams } from 'react-router-native';
-import { View, Text, StyleSheet, Pressable, FlatList } from "react-native";
-import * as Linking from 'expo-linking';
+import { View, Text, StyleSheet, Pressable, FlatList, Alert } from "react-native";
 import { format } from "date-fns";
-import useGetReviews from "../hooks/useGetReviews";
-import useGetRepository from "../hooks/useGetRepostiory";
+import { useNavigate } from "react-router-native";
+import useRemoveReview from "../hooks/useRemoveReview"
 
 const styles = StyleSheet.create({
     container: {
@@ -13,6 +10,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         paddingBottom:5,
         marginBottom:10,
+        flexDirection: 'column',
     },
     structure: {
         flexDirection: 'row',
@@ -23,6 +21,14 @@ const styles = StyleSheet.create({
         marginTop:20,
         marginLeft:10,
         marginRight:20,
+    },
+    buttons: {
+        flexDirection: 'row',
+        justifyContent: 'space-evenly',
+        marginTop:10,
+        marginBottom:10,
+        marginLeft:10,
+        marginRight:10,
     },
     rating_border: {
         height:50,
@@ -66,20 +72,35 @@ const styles = StyleSheet.create({
         width:320,
         paddingBottom:5
     },
-    button: {
+    view_button: {
       display: 'flex',
       color:'white',
+      fontSize:16,
       backgroundColor: '#0366d6',
       textAlign:'center',
       paddingTop:10,
       paddingBottom:10,
-      marginLeft:15,
-      marginRight:15,
+      paddingLeft:40,
+      marginRight:5,
+      paddingRight:40,
       borderRadius:5,
-    } 
+    }, 
+    delete_button: {
+        display: 'flex',
+        color:'white',
+        fontSize:16,
+        backgroundColor: '#FF0000',
+        textAlign:'center',
+        paddingTop:10,
+        marginLeft:5,
+        paddingBottom:10,
+        paddingLeft:40,
+        paddingRight:40,
+        borderRadius:5,
+      } 
 })
 
-const UserReviewItem = ({ review }) => {
+const UserReviewItem = ({ review, handleView, handleDelete }) => {
     return (
         <View style={styles.container}>
             <View style={styles.structure}>
@@ -98,18 +119,55 @@ const UserReviewItem = ({ review }) => {
                     </Text>
                 </View>
             </View>
+            <View style={styles.buttons}>
+                    <Pressable onPress={() => handleView(review.node.repositoryId)}>
+                        <Text style={styles.view_button}>View repository</Text>
+                    </Pressable>
+                    <Pressable onPress={() => handleDelete(review.node.id)}>
+                        <Text style={styles.delete_button}>Delete review</Text>
+                    </Pressable>
+            </View>
         </View>
     )
 };
 
 const MyReviews = () => {
-    const { userReviews, loading } = useGetUserReviews()
+    const navigate = useNavigate()
+    const { userReviews, loading, refetch } = useGetUserReviews()
+    const [deleteReview, result] = useRemoveReview()
+
+    const handleView = (repoId) => {
+        navigate(`/repository/${repoId}`)
+    }
+
+    const onDeletion = async (reviewId) => {
+        try { 
+            await deleteReview({ deleteReviewId: reviewId })
+            refetch()
+        } catch (e) {
+            console.log(e);
+        }
+    } 
+
+    const handleDelete = (reviewId) => {
+        Alert.alert(
+            "Delete review",
+            "Are you sure you want to delete this review?",
+            [
+              {
+                text: "Cancel",
+                style: "cancel"
+              },
+                { text: "Delete", onPress: () => onDeletion(reviewId) } 
+            ]
+          );
+    }
 
     if (!loading) {
         return (
             <FlatList
                 data={userReviews}
-                renderItem={({ item }) => <UserReviewItem review={item}/>}
+                renderItem={({ item }) => <UserReviewItem review={item} handleView={handleView} handleDelete={handleDelete}/>}
                 keyExtractor={item => item.node.id}
             />
         );

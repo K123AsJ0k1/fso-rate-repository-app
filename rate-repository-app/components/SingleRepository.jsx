@@ -122,7 +122,6 @@ const SingleRepository = () => {
     const { reviews, loading, fetchMore } = useGetReviews({ repositoryId:repoId, first: 6 })
     
     const onEndReach = () => {
-        //console.log('You have reached the end of the list')
         fetchMore()
     }
     
